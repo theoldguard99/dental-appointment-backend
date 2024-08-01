@@ -1,27 +1,7 @@
 const User = require('../models/User');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs'); 
-
-const uploadsDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsDir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
-});
-
-const upload = multer({ storage });
 
 const updateUserProfile = async (req, res) => {
-  const { firstName, lastName, address, birthdate } = req.body;
-  const file = req.file;
+  const { firstName, lastName, address, birthdate, contactNumber } = req.body;
 
   try {
     const user = await User.findById(req.user._id);
@@ -31,9 +11,7 @@ const updateUserProfile = async (req, res) => {
       user.lastName = lastName || user.lastName;
       user.address = address || user.address;
       user.birthdate = birthdate || user.birthdate;
-      if (file) {
-        user.medicalHistory = file.path;
-      }
+      user.contactNumber = contactNumber || user.contactNumber;
 
       const updatedUser = await user.save();
       res.json(updatedUser);
@@ -45,4 +23,4 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { updateUserProfile, upload };
+module.exports = { updateUserProfile };
