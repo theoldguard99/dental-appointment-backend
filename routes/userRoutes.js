@@ -1,10 +1,11 @@
 const express = require('express');
-const { register, validateToken, updateProfile } = require('../controllers/authController');
+const { register, loginUser, validateToken, updateProfile } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const { updateUserProfile } = require('../controllers/userController'); 
 const router = express.Router();
 
 router.post('/register', register);
+router.post('/login', loginUser);
 router.get('/validate-token', validateToken);
 router.put('/profile', protect, updateUserProfile);
 
