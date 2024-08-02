@@ -20,7 +20,8 @@ const register = async (req, res) => {
       email,
       password,
       address,
-      birthdate
+      birthdate,
+      contactNumber
     });
 
     await user.save();
