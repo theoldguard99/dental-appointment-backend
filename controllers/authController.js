@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+//fix this function
 const register = async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword, address, birthdate, contactNumber } = req.body;
 
